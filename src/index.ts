@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
-class EconomicREST {
+import { Customer, GetCustomersResponse, PostCustomer } from './zod';
+
+export class EconomicREST {
   public axiosClient: AxiosInstance;
 
   constructor(private XAppSecretToken: string, private XAgreementGrantToken: string) {
@@ -13,7 +15,20 @@ class EconomicREST {
     });
   }
 
-  public customers = {};
+  public customers = {
+    get: async (queryString: string = ''): Promise<GetCustomersResponse> => {
+      const response = await this.axiosClient.get(`/customers${queryString}`);
+      return response.data;
+    },
+    getByCustomerNumber: async (customerNumber: number): Promise<Customer> => {
+      const response = await this.axiosClient.get(`/customers/${customerNumber}`);
+      return response.data;
+    },
+    post: async (customer: PostCustomer): Promise<Customer> => {
+      const response = await this.axiosClient.post('/customers', customer);
+      return response.data;
+    }
+  };
   public invoices = {
     drafts: {},
     booked: {}
