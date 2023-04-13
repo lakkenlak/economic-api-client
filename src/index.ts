@@ -1,5 +1,14 @@
 import axios, { AxiosInstance } from 'axios';
-import { Customer, GetCustomersResponse, PostCustomer } from './zod';
+import {
+  GetCustomerResponse,
+  GetCustomersResponse,
+  GetDraftInvoiceResponse,
+  GetDraftInvoicesResponse,
+  PostBookedInvoice,
+  PostBookedInvoiceResponse,
+  PostCustomer,
+  PostDraftInvoice
+} from './zod';
 
 export class EconomicREST {
   public axiosClient: AxiosInstance;
@@ -20,19 +29,45 @@ export class EconomicREST {
       const response = await this.axiosClient.get(`/customers${queryString}`);
       return response.data;
     },
-    getByCustomerNumber: async (customerNumber: number): Promise<Customer> => {
+    getByCustomerNumber: async (customerNumber: number): Promise<GetCustomerResponse> => {
       const response = await this.axiosClient.get(`/customers/${customerNumber}`);
       return response.data;
     },
-    post: async (customer: PostCustomer): Promise<Customer> => {
+    post: async (customer: PostCustomer): Promise<GetCustomerResponse> => {
       const response = await this.axiosClient.post('/customers', customer);
       return response.data;
+    },
+    delete: async (customerNumber: number): Promise<void> => {
+      const response = await this.axiosClient.delete(`/customers/${customerNumber}`);
     }
   };
   public invoices = {
-    drafts: {},
-    booked: {}
+    drafts: {
+      get: async (queryString: string = ''): Promise<GetDraftInvoicesResponse> => {
+        const response = await this.axiosClient.get(`/invoices/drafts${queryString}`);
+        return response.data;
+      },
+      getByDraftInvoiceNumber: async (draftInvoiceNumber: number): Promise<GetDraftInvoiceResponse> => {
+        const response = await this.axiosClient.get(`/invoices/drafts/${draftInvoiceNumber}`);
+        return response.data;
+      },
+      post: async (draftInvoice: PostDraftInvoice): Promise<GetDraftInvoiceResponse> => {
+        const response = await this.axiosClient.post('/invoices/drafts', draftInvoice);
+        return response.data;
+      },
+      delete: async (draftInvoiceNumber: number): Promise<void> => {
+        await this.axiosClient.delete(`/invoices/drafts/${draftInvoiceNumber}`);
+      }
+    },
+    booked: {
+      post: async (bookBody: PostBookedInvoice): Promise<PostBookedInvoiceResponse> => {
+        const response = await this.axiosClient.post('/invoices/booked', bookBody);
+        return response.data;
+      }
+    }
   };
 }
 
 const economicClient = new EconomicREST('X-AppSecretToken', 'X-AgreementGrantToken');
+
+export default economicClient;
