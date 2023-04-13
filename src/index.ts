@@ -1,99 +1,108 @@
 import axios, { AxiosInstance } from 'axios';
 import {
-  GetCustomerResponse,
-  GetCustomersResponse,
-  GetDraftInvoiceResponse,
-  GetDraftInvoicesResponse,
-  PostBookedInvoice,
-  PostBookedInvoiceResponse,
-  PostCustomer,
-  PostDraftInvoice,
-  zGetCustomerResponse,
-  zGetCustomersResponse,
-  zPostCustomer,
-  zGetDraftInvoicesResponse,
-  zGetDraftInvoiceResponse,
-  zPostDraftInvoices,
-  zPostBookedInvoice,
-  zPostBookedInvoiceResponse
-} from './zod';
+  GetCustomerResponseBody,
+  GetCustomersResponseBody,
+  PostCustomerRequestBody,
+  PostCustomerResponseBody,
+  zGetCustomerRequestBody,
+  zGetCustomersResponseBody
+} from './customers';
+import {
+  GetDraftInvoiceResponseBody,
+  GetDraftInvoicesResponseBody,
+  PostDraftInvoiceRequestBody,
+  PostDraftInvoiceResponseBody,
+  zGetDraftInvoiceResponseBody,
+  zGetDraftInvoicesResponseBody
+} from './draftInvoice';
+import {
+  GetBookedInvoiceResponseBody,
+  GetBookedInvoicesResponseBody,
+  PostBookedInvoiceRequestBody,
+  PostBookedInvoiceResponseBody,
+  zPostBookedInvoiceResponseBody
+} from './bookedInvoices';
 
-export class EconomicREST {
+class EconomicClient implements EconomicClient {
   public axiosClient: AxiosInstance;
-
-  constructor(private XAppSecretToken: string, private XAgreementGrantToken: string) {
+  constructor(private readonly X_APP_SECRET_TOKEN: string, private readonly X_AGREEMENT_GRANT_TOKEN: string) {
     this.axiosClient = axios.create({
       baseURL: 'https://restapi.e-conomic.com',
       headers: {
-        'X-AppSecretToken': this.XAppSecretToken,
-        'X-AgreementGrantToken': this.XAgreementGrantToken,
-        'Content-Type': 'application/json'
+        'X-AppSecretToken': this.X_APP_SECRET_TOKEN,
+        'X-AgreementGrantToken': this.X_AGREEMENT_GRANT_TOKEN
       }
     });
   }
 
   public customers = {
-    get: async (queryString: string = ''): Promise<GetCustomersResponse> => {
+    get: async (queryString: string = ''): Promise<GetCustomersResponseBody> => {
       const response = await this.axiosClient.get(`/customers${queryString}`);
-      return response.data;
+      return await zGetCustomersResponseBody.parseAsync(response.data);
     },
-    getByCustomerNumber: async (customerNumber: number): Promise<GetCustomerResponse> => {
+    getOne: async (customerNumber: number): Promise<GetCustomerResponseBody> => {
+      const response = await this.axiosClient.get(`/customers/${customerNumber}`);
+      return await zGetCustomerRequestBody.parseAsync(response.data);
+    },
+    post: async (customer: PostCustomerRequestBody): Promise<PostCustomerResponseBody> => {
+      const response = await this.axiosClient.post('/customers', customer);
+      return await zGetCustomerRequestBody.parseAsync(response.data);
+    },
+    delete: async (customerNumber: number): Promise<void> => {
+      await this.axiosClient.delete(`/customers/${customerNumber}`);
+    }
+  };
+  public draftInvoices = {
+    get: async (queryString: string = ''): Promise<GetDraftInvoicesResponseBody> => {
+      const response = await this.axiosClient.get(`/customers${queryString}`);
+      return await zGetDraftInvoicesResponseBody.parseAsync(response.data.collection);
+    },
+    getOne: async (customerNumber: number): Promise<GetDraftInvoiceResponseBody> => {
+      const response = await this.axiosClient.get(`/customers/${customerNumber}`);
+      return await zGetDraftInvoiceResponseBody.parseAsync(response.data);
+    },
+    post: async (customer: PostDraftInvoiceRequestBody): Promise<PostDraftInvoiceResponseBody> => {
+      const response = await this.axiosClient.post('/customers', customer);
+      return await zGetDraftInvoiceResponseBody.parseAsync(response.data);
+    },
+    delete: async (customerNumber: number): Promise<void> => {
+      await this.axiosClient.delete(`/customers/${customerNumber}`);
+    }
+  };
+  public bookedInvoices = {
+    get: async (queryString: string = ''): Promise<GetBookedInvoicesResponseBody> => {
+      const response = await this.axiosClient.get(`/customers${queryString}`);
+      return response.data.collection;
+    },
+    getOne: async (customerNumber: number): Promise<GetBookedInvoiceResponseBody> => {
       const response = await this.axiosClient.get(`/customers/${customerNumber}`);
       return response.data;
     },
-    post: async (customer: PostCustomer): Promise<GetCustomerResponse> => {
+    post: async (customer: PostBookedInvoiceRequestBody): Promise<PostBookedInvoiceResponseBody> => {
       const response = await this.axiosClient.post('/customers', customer);
-      return response.data;
-    },
-    delete: async (customerNumber: number): Promise<void> => {
-      const response = await this.axiosClient.delete(`/customers/${customerNumber}`);
-    }
-  };
-  public invoices = {
-    drafts: {
-      get: async (queryString: string = ''): Promise<GetDraftInvoicesResponse> => {
-        const response = await this.axiosClient.get(`/invoices/drafts${queryString}`);
-        return response.data;
-      },
-      getByDraftInvoiceNumber: async (draftInvoiceNumber: number): Promise<GetDraftInvoiceResponse> => {
-        const response = await this.axiosClient.get(`/invoices/drafts/${draftInvoiceNumber}`);
-        return response.data;
-      },
-      post: async (draftInvoice: PostDraftInvoice): Promise<GetDraftInvoiceResponse> => {
-        const response = await this.axiosClient.post('/invoices/drafts', draftInvoice);
-        return response.data;
-      },
-      delete: async (draftInvoiceNumber: number): Promise<void> => {
-        await this.axiosClient.delete(`/invoices/drafts/${draftInvoiceNumber}`);
-      }
-    },
-    booked: {
-      post: async (bookBody: PostBookedInvoice): Promise<PostBookedInvoiceResponse> => {
-        const response = await this.axiosClient.post('/invoices/booked', bookBody);
-        return response.data;
-      }
+      return await zPostBookedInvoiceResponseBody.parseAsync(response.data);
     }
   };
 }
 
-const economicClient = new EconomicREST('X-AppSecretToken', 'X-AgreementGrantToken');
+export default EconomicClient;
 
-export default economicClient;
 export {
-  GetCustomerResponse,
-  GetCustomersResponse,
-  PostCustomer,
-  GetDraftInvoicesResponse,
-  GetDraftInvoiceResponse,
-  PostDraftInvoice,
-  PostBookedInvoice,
-  PostBookedInvoiceResponse,
-  zGetCustomerResponse,
-  zGetCustomersResponse,
-  zPostCustomer,
-  zGetDraftInvoicesResponse,
-  zGetDraftInvoiceResponse,
-  zPostDraftInvoices,
-  zPostBookedInvoice,
-  zPostBookedInvoiceResponse
+  GetCustomerResponseBody,
+  GetCustomersResponseBody,
+  PostCustomerRequestBody,
+  PostCustomerResponseBody,
+  zGetCustomerRequestBody,
+  zGetCustomersResponseBody,
+  GetDraftInvoiceResponseBody,
+  GetDraftInvoicesResponseBody,
+  PostDraftInvoiceRequestBody,
+  PostDraftInvoiceResponseBody,
+  zGetDraftInvoiceResponseBody,
+  zGetDraftInvoicesResponseBody,
+  GetBookedInvoiceResponseBody,
+  GetBookedInvoicesResponseBody,
+  PostBookedInvoiceRequestBody,
+  PostBookedInvoiceResponseBody,
+  zPostBookedInvoiceResponseBody
 };
