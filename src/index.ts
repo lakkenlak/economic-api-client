@@ -92,7 +92,7 @@ export {
   GetCustomersResponseBody,
   PostCustomerRequestBody,
   PostCustomerResponseBody,
-  zGetCustomerRequestBody,
+  zGetCustomerResponseBody,
   zGetCustomersResponseBody,
   GetDraftInvoiceResponseBody,
   GetDraftInvoicesResponseBody,
