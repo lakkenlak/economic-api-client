@@ -4,7 +4,7 @@ import {
   GetCustomersResponseBody,
   PostCustomerRequestBody,
   PostCustomerResponseBody,
-  zGetCustomerRequestBody,
+  zGetCustomerResponseBody,
   zGetCustomersResponseBody
 } from './customers';
 import {
@@ -42,11 +42,11 @@ class EconomicClient implements EconomicClient {
     },
     getOne: async (customerNumber: number): Promise<GetCustomerResponseBody> => {
       const response = await this.axiosClient.get(`/customers/${customerNumber}`);
-      return await zGetCustomerRequestBody.parseAsync(response.data);
+      return await zGetCustomerResponseBody.parseAsync(response.data);
     },
     post: async (customer: PostCustomerRequestBody): Promise<PostCustomerResponseBody> => {
       const response = await this.axiosClient.post('/customers', customer);
-      return await zGetCustomerRequestBody.parseAsync(response.data);
+      return await zGetCustomerResponseBody.parseAsync(response.data);
     },
     delete: async (customerNumber: number): Promise<void> => {
       await this.axiosClient.delete(`/customers/${customerNumber}`);
