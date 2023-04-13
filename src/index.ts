@@ -7,7 +7,15 @@ import {
   PostBookedInvoice,
   PostBookedInvoiceResponse,
   PostCustomer,
-  PostDraftInvoice
+  PostDraftInvoice,
+  zGetCustomerResponse,
+  zGetCustomersResponse,
+  zPostCustomer,
+  zGetDraftInvoicesResponse,
+  zGetDraftInvoiceResponse,
+  zPostDraftInvoices,
+  zPostBookedInvoice,
+  zPostBookedInvoiceResponse
 } from './zod';
 
 export class EconomicREST {
@@ -71,3 +79,21 @@ export class EconomicREST {
 const economicClient = new EconomicREST('X-AppSecretToken', 'X-AgreementGrantToken');
 
 export default economicClient;
+export {
+  GetCustomerResponse,
+  GetCustomersResponse,
+  PostCustomer,
+  GetDraftInvoicesResponse,
+  GetDraftInvoiceResponse,
+  PostDraftInvoice,
+  PostBookedInvoice,
+  PostBookedInvoiceResponse,
+  zGetCustomerResponse,
+  zGetCustomersResponse,
+  zPostCustomer,
+  zGetDraftInvoicesResponse,
+  zGetDraftInvoiceResponse,
+  zPostDraftInvoices,
+  zPostBookedInvoice,
+  zPostBookedInvoiceResponse
+};
