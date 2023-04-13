@@ -1,0 +1,8 @@
+src
+tests
+.env
+.gitignore
+.eslintrc.json
+jest.config.ts
+tsconfig.json
+.prettierrc.json
