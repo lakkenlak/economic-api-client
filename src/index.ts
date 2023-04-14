@@ -20,7 +20,8 @@ import {
   GetBookedInvoicesResponseBody,
   PostBookedInvoiceRequestBody,
   PostBookedInvoiceResponseBody,
-  zPostBookedInvoiceResponseBody
+  zGetBookedInvoiceResponseBody,
+  zGetBookedInvoicesResponseBody
 } from './bookedInvoices';
 
 class EconomicClient implements EconomicClient {
@@ -72,15 +73,15 @@ class EconomicClient implements EconomicClient {
   public bookedInvoices = {
     get: async (queryString: string = ''): Promise<GetBookedInvoicesResponseBody> => {
       const response = await this.axiosClient.get(`/customers${queryString}`);
-      return response.data.collection;
+      return await zGetBookedInvoicesResponseBody.parseAsync(response.data);
     },
     getOne: async (customerNumber: number): Promise<GetBookedInvoiceResponseBody> => {
       const response = await this.axiosClient.get(`/customers/${customerNumber}`);
-      return response.data;
+      return await zGetBookedInvoiceResponseBody.parseAsync(response.data);
     },
     post: async (customer: PostBookedInvoiceRequestBody): Promise<PostBookedInvoiceResponseBody> => {
       const response = await this.axiosClient.post('/customers', customer);
-      return await zPostBookedInvoiceResponseBody.parseAsync(response.data);
+      return response.data;
     }
   };
 }
@@ -103,6 +104,5 @@ export {
   GetBookedInvoiceResponseBody,
   GetBookedInvoicesResponseBody,
   PostBookedInvoiceRequestBody,
-  PostBookedInvoiceResponseBody,
-  zPostBookedInvoiceResponseBody
+  PostBookedInvoiceResponseBody
 };
