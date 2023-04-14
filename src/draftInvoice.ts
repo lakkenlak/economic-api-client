@@ -9,11 +9,15 @@ export const zGetDraftInvoicesResponseBody = z
       z.object({
         //required values
         draftInvoiceNumber: z.number(),
-        soap: z.object({
-          currentInvoiceHandle: z.object({
-            Id: z.number()
+        soap: z
+          .object({
+            currentInvoiceHandle: z
+              .object({
+                Id: z.number().optional()
+              })
+              .optional()
           })
-        }),
+          .optional(),
         templates: z.object({
           bookingInstructions: z.string().url(),
           self: z.string().url()
@@ -33,10 +37,10 @@ export const zGetDraftInvoicesResponseBody = z
         dueDate: z.string(),
         paymentTerms: z.object({
           paymentTermsNumber: z.number(),
-          daysOfCredit: z.number(),
-          description: z.string(),
-          name: z.string(),
-          paymentTermsType: z.string(),
+          daysOfCredit: z.number().optional(),
+          description: z.string().optional(),
+          name: z.string().optional(),
+          paymentTermsType: z.string().optional(),
           self: z.string().url()
         }),
         customer: z.object({
@@ -142,11 +146,15 @@ export const zGetDraftInvoiceResponseBody = z
   .object({
     //required values
     draftInvoiceNumber: z.number(),
-    soap: z.object({
-      currentInvoiceHandle: z.object({
-        Id: z.number()
+    soap: z
+      .object({
+        currentInvoiceHandle: z
+          .object({
+            Id: z.number().optional()
+          })
+          .optional()
       })
-    }),
+      .optional(),
     templates: z.object({
       bookingInstructions: z.string().url(),
       self: z.string().url()
@@ -166,10 +174,10 @@ export const zGetDraftInvoiceResponseBody = z
     dueDate: z.string(),
     paymentTerms: z.object({
       paymentTermsNumber: z.number(),
-      daysOfCredit: z.number(),
-      description: z.string(),
-      name: z.string(),
-      paymentTermsType: z.string(),
+      daysOfCredit: z.number().optional(),
+      description: z.string().optional(),
+      name: z.string().optional(),
+      paymentTermsType: z.string().optional(),
       self: z.string().url()
     }),
     customer: z.object({
@@ -369,7 +377,6 @@ export const zPostDraftInvoiceRequestBody = z
           .optional()
       })
       .optional(),
-    // missing lines
     lines: z
       .array(
         z.object({

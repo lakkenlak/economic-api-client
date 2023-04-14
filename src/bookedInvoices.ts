@@ -22,15 +22,15 @@ export const zGetBookedInvoicesResponseBody = z
         dueDate: z.string(),
         paymentTerms: z.object({
           paymentTermsNumber: z.number(),
-          daysOfCredit: z.number(),
-          description: z.string(),
-          name: z.string(),
-          paymentTermsType: z.string(),
+          daysOfCredit: z.number().optional(),
+          description: z.string().optional(),
+          name: z.string().optional(),
+          paymentTermsType: z.string().optional(),
           self: z.string().url()
         }),
         customer: z.object({
           customerNumber: z.number(),
-          name: z.string()
+          self: z.string().url()
         }),
         recipient: z.object({
           name: z.string(),
@@ -161,15 +161,15 @@ export const zGetBookedInvoiceResponseBody = z
     dueDate: z.string(),
     paymentTerms: z.object({
       paymentTermsNumber: z.number(),
-      daysOfCredit: z.number(),
-      description: z.string(),
-      name: z.string(),
-      paymentTermsType: z.string(),
+      daysOfCredit: z.number().optional(),
+      description: z.string().optional(),
+      name: z.string().optional(),
+      paymentTermsType: z.string().optional(),
       self: z.string().url()
     }),
     customer: z.object({
       customerNumber: z.number(),
-      name: z.string()
+      self: z.string().url()
     }),
     recipient: z.object({
       name: z.string(),
