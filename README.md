@@ -22,6 +22,12 @@ Uses the ZOD library to validate responses and ensure type safety, trying to sta
 - POST /invoices/drafts
 - DELETE /invoices/drafts/:draftInvoiceNumber
 
+### /invoices/booked
+
+- GET /invoices/booked
+- GET /invoices/booked/:bookedInvoiceNumber
+- POST /invoices/booked/
+
 ## Usage example
 
 ```typescript
