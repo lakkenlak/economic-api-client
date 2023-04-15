@@ -1,6 +1,7 @@
 # economic-api-client
 
-An API client that interfaces with the Visma E-conomic REST API
+An API client that interfaces with the Visma E-conomic REST API.
+Uses the ZOD library to validate responses and ensure type safety, trying to stay as true as possible to the JSON schemas provided by e-conomic, although some assumptions are made about the responses such as always expecting some values that are not specified as required in the JSON schema but are always present, such as customerNumber, draftInvoiceNumber and bookedInvoiceNumber.
 
 - https://restdocs.e-conomic.com/
 
