@@ -58,16 +58,16 @@ class EconomicClient implements EconomicClient {
       const response = await this.axiosClient.get(`/invoices/drafts${queryString}`);
       return await zGetDraftInvoicesResponseBody.parseAsync(response.data);
     },
-    getOne: async (customerNumber: number): Promise<GetDraftInvoiceResponseBody> => {
-      const response = await this.axiosClient.get(`/invoices/drafts/${customerNumber}`);
+    getOne: async (draftInvoiceNumber: number): Promise<GetDraftInvoiceResponseBody> => {
+      const response = await this.axiosClient.get(`/invoices/drafts/${draftInvoiceNumber}`);
       return await zGetDraftInvoiceResponseBody.parseAsync(response.data);
     },
-    post: async (customer: PostDraftInvoiceRequestBody): Promise<PostDraftInvoiceResponseBody> => {
-      const response = await this.axiosClient.post('/invoices/drafts', customer);
+    post: async (draftInvoice: PostDraftInvoiceRequestBody): Promise<PostDraftInvoiceResponseBody> => {
+      const response = await this.axiosClient.post('/invoices/drafts', draftInvoice);
       return await zGetDraftInvoiceResponseBody.parseAsync(response.data);
     },
-    delete: async (customerNumber: number): Promise<void> => {
-      await this.axiosClient.delete(`/invoices/drafts/${customerNumber}`);
+    delete: async (draftInvoiceNumber: number): Promise<void> => {
+      await this.axiosClient.delete(`/invoices/drafts/${draftInvoiceNumber}`);
     }
   };
   public bookedInvoices = {
@@ -75,12 +75,12 @@ class EconomicClient implements EconomicClient {
       const response = await this.axiosClient.get(`/invoices/booked${queryString}`);
       return await zGetBookedInvoicesResponseBody.parseAsync(response.data);
     },
-    getOne: async (customerNumber: number): Promise<GetBookedInvoiceResponseBody> => {
-      const response = await this.axiosClient.get(`/invoices/booked/${customerNumber}`);
+    getOne: async (bookedInvoiceNumber: number): Promise<GetBookedInvoiceResponseBody> => {
+      const response = await this.axiosClient.get(`/invoices/booked/${bookedInvoiceNumber}`);
       return await zGetBookedInvoiceResponseBody.parseAsync(response.data);
     },
-    post: async (customer: PostBookedInvoiceRequestBody): Promise<PostBookedInvoiceResponseBody> => {
-      const response = await this.axiosClient.post('/invoices/booked', customer);
+    post: async (bookedInvoiceRequestBody: PostBookedInvoiceRequestBody): Promise<PostBookedInvoiceResponseBody> => {
+      const response = await this.axiosClient.post('/invoices/booked', bookedInvoiceRequestBody);
       return await zGetBookedInvoiceResponseBody.parseAsync(response.data);
     }
   };
