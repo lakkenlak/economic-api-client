@@ -50,6 +50,9 @@ class EconomicClient implements EconomicClient {
       return await zGetCustomerResponseBody.parseAsync(response.data);
     },
     delete: async (customerNumber: number): Promise<void> => {
+      // prevent accidental deletion of all customers
+      if (typeof customerNumber !== 'number') throw new Error('customerNumber must be a number');
+      if (customerNumber < 1) throw new Error('customerNumber must be greater than 0');
       await this.axiosClient.delete(`/customers/${customerNumber}`);
     }
   };
@@ -73,6 +76,9 @@ class EconomicClient implements EconomicClient {
       return await zGetDraftInvoiceResponseBody.parseAsync(response.data);
     },
     delete: async (draftInvoiceNumber: number): Promise<void> => {
+      // prevent accidental deletion of all draftInvoices
+      if (typeof draftInvoiceNumber !== 'number') throw new Error('draftInvoiceNumber must be a number');
+      if (draftInvoiceNumber < 1) throw new Error('draftInvoiceNumber must be greater than 0');
       await this.axiosClient.delete(`/invoices/drafts/${draftInvoiceNumber}`);
     }
   };
