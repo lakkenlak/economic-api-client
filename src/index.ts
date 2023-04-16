@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, ResponseType } from 'axios';
 import {
   GetCustomerResponseBody,
   GetCustomersResponseBody,
@@ -62,6 +62,12 @@ class EconomicClient implements EconomicClient {
       const response = await this.axiosClient.get(`/invoices/drafts/${draftInvoiceNumber}`);
       return await zGetDraftInvoiceResponseBody.parseAsync(response.data);
     },
+    getOnePDF: async (draftInvoiceNumber: number, responseType: ResponseType = 'arraybuffer') => {
+      const response = await this.axiosClient.get(`/invoices/drafts/${draftInvoiceNumber}/pdf`, {
+        responseType
+      });
+      return response.data;
+    },
     post: async (draftInvoice: PostDraftInvoiceRequestBody): Promise<PostDraftInvoiceResponseBody> => {
       const response = await this.axiosClient.post('/invoices/drafts', draftInvoice);
       return await zGetDraftInvoiceResponseBody.parseAsync(response.data);
@@ -78,6 +84,12 @@ class EconomicClient implements EconomicClient {
     getOne: async (bookedInvoiceNumber: number): Promise<GetBookedInvoiceResponseBody> => {
       const response = await this.axiosClient.get(`/invoices/booked/${bookedInvoiceNumber}`);
       return await zGetBookedInvoiceResponseBody.parseAsync(response.data);
+    },
+    getOnePDF: async (bookedInvoiceNumber: number, responseType: ResponseType = 'arraybuffer') => {
+      const response = await this.axiosClient.get(`/invoices/booked/${bookedInvoiceNumber}/pdf`, {
+        responseType
+      });
+      return response.data;
     },
     post: async (bookedInvoiceRequestBody: PostBookedInvoiceRequestBody): Promise<PostBookedInvoiceResponseBody> => {
       const response = await this.axiosClient.post('/invoices/booked', bookedInvoiceRequestBody);

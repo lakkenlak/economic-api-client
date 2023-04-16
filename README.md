@@ -18,6 +18,7 @@ Uses the ZOD library to validate responses and ensure type safety, trying to sta
 
 - GET /invoices/drafts
 - GET /invoices/drafts/:draftInvoiceNumber
+- GET /invoices/drafts/:draftInvoiceNumber/pdf
 - POST /invoices/drafts
 - POST /invoices/drafts
 - DELETE /invoices/drafts/:draftInvoiceNumber
@@ -26,6 +27,7 @@ Uses the ZOD library to validate responses and ensure type safety, trying to sta
 
 - GET /invoices/booked
 - GET /invoices/booked/:bookedInvoiceNumber
+- GET /invoices/booked/:bookedInvoiceNumber/pdf
 - POST /invoices/booked/
 
 ## Usage example
