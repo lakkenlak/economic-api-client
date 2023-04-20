@@ -13,7 +13,7 @@ export const zGetDraftInvoicesResponseBody = z
           .object({
             currentInvoiceHandle: z
               .object({
-                Id: z.number().optional()
+                id: z.number().optional()
               })
               .optional()
           })
@@ -150,7 +150,7 @@ export const zGetDraftInvoiceResponseBody = z
       .object({
         currentInvoiceHandle: z
           .object({
-            Id: z.number().optional()
+            id: z.number().optional()
           })
           .optional()
       })
