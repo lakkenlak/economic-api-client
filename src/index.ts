@@ -42,6 +42,8 @@ class EconomicClient implements EconomicClient {
       return await zGetCustomersResponseBody.parseAsync(response.data);
     },
     getOne: async (customerNumber: number): Promise<GetCustomerResponseBody> => {
+      if (typeof customerNumber !== 'number') throw new Error('customerNumber must be a number');
+      if (customerNumber < 1) throw new Error('customerNumber must be greater than 0');
       const response = await this.axiosClient.get(`/customers/${customerNumber}`);
       return await zGetCustomerResponseBody.parseAsync(response.data);
     },
@@ -62,10 +64,14 @@ class EconomicClient implements EconomicClient {
       return await zGetDraftInvoicesResponseBody.parseAsync(response.data);
     },
     getOne: async (draftInvoiceNumber: number): Promise<GetDraftInvoiceResponseBody> => {
+      if (typeof draftInvoiceNumber !== 'number') throw new Error('draftInvoiceNumber must be a number');
+      if (draftInvoiceNumber < 1) throw new Error('draftInvoiceNumber must be greater than 0');
       const response = await this.axiosClient.get(`/invoices/drafts/${draftInvoiceNumber}`);
       return await zGetDraftInvoiceResponseBody.parseAsync(response.data);
     },
     getOnePDF: async (draftInvoiceNumber: number, responseType: ResponseType = 'arraybuffer') => {
+      if (typeof draftInvoiceNumber !== 'number') throw new Error('draftInvoiceNumber must be a number');
+      if (draftInvoiceNumber < 1) throw new Error('draftInvoiceNumber must be greater than 0');
       const response = await this.axiosClient.get(`/invoices/drafts/${draftInvoiceNumber}/pdf`, {
         responseType
       });
@@ -73,6 +79,12 @@ class EconomicClient implements EconomicClient {
     },
     post: async (draftInvoice: PostDraftInvoiceRequestBody): Promise<PostDraftInvoiceResponseBody> => {
       const response = await this.axiosClient.post('/invoices/drafts', draftInvoice);
+      return await zGetDraftInvoiceResponseBody.parseAsync(response.data);
+    },
+    put: async (draftInvoiceNumber: number, draftInvoice: PostDraftInvoiceRequestBody): Promise<GetDraftInvoiceResponseBody> => {
+      if (typeof draftInvoiceNumber !== 'number') throw new Error('draftInvoiceNumber must be a number');
+      if (draftInvoiceNumber < 1) throw new Error('draftInvoiceNumber must be greater than 0');
+      const response = await this.axiosClient.put(`/invoices/drafts/${draftInvoiceNumber}`, draftInvoice);
       return await zGetDraftInvoiceResponseBody.parseAsync(response.data);
     },
     delete: async (draftInvoiceNumber: number): Promise<void> => {
@@ -88,10 +100,14 @@ class EconomicClient implements EconomicClient {
       return await zGetBookedInvoicesResponseBody.parseAsync(response.data);
     },
     getOne: async (bookedInvoiceNumber: number): Promise<GetBookedInvoiceResponseBody> => {
+      if (typeof bookedInvoiceNumber !== 'number') throw new Error('bookedInvoiceNumber must be a number');
+      if (bookedInvoiceNumber < 1) throw new Error('bookedInvoiceNumber must be greater than 0');
       const response = await this.axiosClient.get(`/invoices/booked/${bookedInvoiceNumber}`);
       return await zGetBookedInvoiceResponseBody.parseAsync(response.data);
     },
     getOnePDF: async (bookedInvoiceNumber: number, responseType: ResponseType = 'arraybuffer') => {
+      if (typeof bookedInvoiceNumber !== 'number') throw new Error('bookedInvoiceNumber must be a number');
+      if (bookedInvoiceNumber < 1) throw new Error('bookedInvoiceNumber must be greater than 0');
       const response = await this.axiosClient.get(`/invoices/booked/${bookedInvoiceNumber}/pdf`, {
         responseType
       });
