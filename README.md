@@ -20,7 +20,7 @@ Uses the ZOD library to validate responses and ensure type safety, trying to sta
 - GET /invoices/drafts/:draftInvoiceNumber
 - GET /invoices/drafts/:draftInvoiceNumber/pdf
 - POST /invoices/drafts
-- POST /invoices/drafts
+- PUT /invoices/drafts
 - DELETE /invoices/drafts/:draftInvoiceNumber
 
 ### /invoices/booked
