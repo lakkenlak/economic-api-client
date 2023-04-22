@@ -74,8 +74,8 @@ export const zGetCustomersResponseBody = z
       pageSize: z.number(),
       results: z.number(),
       resultsWithoutFilter: z.number(),
-      firstPage: z.string().url(),
-      lastPage: z.string().url(),
+      firstPage: z.string().url().optional(),
+      lastPage: z.string().url().optional(),
       nextPage: z.string().url().optional(),
       previousPage: z.string().url().optional()
     }),
