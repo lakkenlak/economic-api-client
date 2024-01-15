@@ -26,7 +26,10 @@ import {
 
 class EconomicClient implements EconomicClient {
   public axiosClient: AxiosInstance;
-  constructor(private readonly X_APP_SECRET_TOKEN: string, private readonly X_AGREEMENT_GRANT_TOKEN: string) {
+  constructor(
+    private readonly X_APP_SECRET_TOKEN: string,
+    private readonly X_AGREEMENT_GRANT_TOKEN: string
+  ) {
     this.axiosClient = axios.create({
       baseURL: 'https://restapi.e-conomic.com',
       headers: {

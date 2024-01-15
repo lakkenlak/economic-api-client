@@ -324,9 +324,11 @@ export const zPostDraftInvoiceRequestBody = z
       ean: z.string().optional(),
       mobilePhone: z.string().optional(),
       cvr: z.string().optional(),
-      attention: z.object({
-        customerContactNumber: z.number()
-      }).optional(),
+      attention: z
+        .object({
+          customerContactNumber: z.number()
+        })
+        .optional()
     }),
     layout: z.object({
       layoutNumber: z.number()
