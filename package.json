@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/LakkenLak/economic-api-client#readme",
   "devDependencies": {
-    "prettier": "^2.8.7",
+    "prettier": "^3.2.2",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   },
